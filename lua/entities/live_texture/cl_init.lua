@@ -36,11 +36,15 @@ function ENT:CreateLiveTexture()
         surface.SetDrawColor(255, 255, 255, 255)
         surface.DrawTexturedRect(0, 0, mat:Width(), mat:Height())
 
+        surface.SetAlphaMultiplier(0.5)
+
         surface.SetDrawColor(255, 0, 0)
         surface.SetFont("DermaLarge")
         surface.SetTextPos(0, 0)
         surface.SetTextColor(255, 0, 0)
         surface.DrawText("Hello, " .. LocalPlayer():Nick() .. "!")
+
+        surface.SetAlphaMultiplier(1)
     cam.End2D()
 
     render.PopRenderTarget()
@@ -48,6 +52,7 @@ function ENT:CreateLiveTexture()
     mat:SetInt("$flags", old_flags)
 
     local props = mat:GetKeyValues()
+    PrintTable(props)
     props["$basetexture"] = "rt_" .. self:EntIndex()
 
     local new_mat = CreateMaterial("rtmat_" .. self:EntIndex(), "VertexLitGeneric", props)
@@ -60,6 +65,6 @@ function ENT:Think()
         self.LiveTexture = self:CreateLiveTexture()
         self:SetMaterial("!rtmat_" .. self:EntIndex())
     else
-        self:UpdateLiveTexture(self.LiveTexture:Width(), self.LiveTexture:Height())
+        // self:UpdateLiveTexture(self.LiveTexture:Width(), self.LiveTexture:Height())
     end
 end
